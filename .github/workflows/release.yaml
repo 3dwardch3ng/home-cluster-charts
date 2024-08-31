@@ -36,7 +36,8 @@ jobs:
       - name: Upload Charts
         id: upload_charts
         run: |
-          for pkg in release-packages/* do
+          ls release-packages
+          for pkg in release-packages/*; do
             if [ -z "${pkg:-}" ]; then
               break
             fi
