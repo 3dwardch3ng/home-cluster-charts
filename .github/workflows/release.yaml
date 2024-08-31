@@ -36,10 +36,10 @@ jobs:
       - name: Upload Charts
         id: upload_charts
         run: |
-          ls release-packages
           for pkg in release-packages/*; do
             if [ -z "${pkg:-}" ]; then
               break
             fi
             echo "Uploading $pkg..."
+            curl --data-binary $pkg https://chartmuseum.cluster.edward.sydney
           done
