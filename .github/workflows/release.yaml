@@ -41,5 +41,5 @@ jobs:
               break
             fi
             echo "Uploading $pkg..."
-            curl --data-binary $pkg https://chartmuseum.cluster.edward.sydney
+            curl --data-binary $pkg https://chartmuseum.cluster.edward.sydney/api/charts
           done
