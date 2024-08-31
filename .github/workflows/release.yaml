@@ -42,5 +42,5 @@ jobs:
               break
             fi
             echo "Uploading $pkg..."
-            curl --data-binary "@$pkg" ${secrets.CHARTMUSEUM_URL}/api/charts
+            curl --data-binary "@$pkg" ${{ secrets.CHARTMUSEUM_URL }}/api/charts
           done
