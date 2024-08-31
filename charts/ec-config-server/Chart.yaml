@@ -1,0 +1,12 @@
+apiVersion: v2
+appVersion: "1.0.4"
+description: A Helm chart for ec-config-server microservice
+home: https://github.com/3dwardch3ng/ec-config-server
+maintainers:
+  - email: edward@cheng.sydney
+    name: Edward Cheng
+name: ec-config-server
+sources:
+  - https://github.com/3dwardch3ng/ec-config-server
+version: 1.0.0
+

@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "ec-config-server.fullname" . }}
+  namespace: {{ include "ec-config-server.namespace" . }}
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-internal: 0.0.0.0/0
+    service.beta.kubernetes.io/aws-load-balancer-type: "elb"
+  labels:
+    {{- include "ec-config-server.labels" . | nindent 4 }}
+    spring-boot: "{{ .Values.labels.springboot }}"
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "ec-config-server.selectorLabels" . | nindent 4 }}

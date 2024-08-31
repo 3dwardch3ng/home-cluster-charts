@@ -1,0 +1,118 @@
+fullnameOverride:
+nameOverride:
+namespaceOverride: ec-proj
+
+affinity:
+  podAntiAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        podAffinityTerm:
+          labelSelector:
+            matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                  - ec-config-server
+          topologyKey: kubernetes.io/hostname
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 75
+
+deployment:
+  livenesscheckpath: /actuator/health/liveness
+  readinesscheckpath: /actuator/health/readiness
+  healthcheckport: 8100
+  healthcheckscheme: HTTP
+  startupProbe:
+    periodSeconds: 5
+    successThreshold: 1
+    timeoutSeconds: 10
+    failureThreshold: 10
+    initialDelaySeconds: 10
+  livenessProbe:
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 1
+    failureThreshold: 3
+  readinessProbe:
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 3
+    failureThreshold: 3
+
+environment:
+  name: k3s-cluster
+  configNativeSearchLocation:
+
+image:
+  repository:
+    edeedeeed/ec-config-server
+  pullPolicy: Always
+  # Overrides the image tag whose default is the chart appVersion.
+  tag:
+
+nodeSelector: {}
+
+imagePullSecrets: []
+
+labels:
+  springboot: true
+
+pdb:
+  enabled: true
+  minAvailable: 50%
+
+podAnnotations: {}
+
+podSecurityContext: {}
+# fsGroup: 2000
+
+replicaCount: 1
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  limits:
+    cpu: 0.5
+    memory: 1Gi
+  requests:
+    cpu: 0.5
+    memory: 512Mi
+
+rollingUpdate:
+  maxUnavailable: 0
+  maxSurge: 100%
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+# runAsNonRoot: true
+# runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 8100
+  targetPort: 8100
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ec-user
+
+spring:
+  activeprofile: native,k8s
+  configNativeSearchLocation:
+
+tolerations: []
+
+
+
+
