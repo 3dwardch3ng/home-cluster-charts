@@ -42,5 +42,7 @@ jobs:
               break
             fi
             echo "Uploading $pkg..."
-            curl --request POST --data-binary "@$pkg" ${{ secrets.CHARTMUSEUM_URL }}/api/charts
+            curl --location '${{ secrets.CHARTMUSEUM_URL }}/api/charts' \
+              --header 'Content-Type: application/octet-stream' \
+              --data "@$pkg"
           done
