@@ -35,7 +35,7 @@ jobs:
             charts=$(curl --location '${{ secrets.CHARTMUSEUM_URL }}/api/charts/$chart_name')
             echo $charts
             echo "Getting version strings for chart $chart_name"
-            existing_versions=$($charts | jq '.[].version')
+            existing_versions=$(echo $charts | jq '.[].version')
             echo "$chart_name versions: $existing_versions"
             if [[ ${existing_versions[@]} =~ version ]] 
             then
