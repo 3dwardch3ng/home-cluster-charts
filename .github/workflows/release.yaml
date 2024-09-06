@@ -31,8 +31,11 @@ jobs:
           for dir in charts/*; do
             chart_name="$(basename "$dir")"
             version="$(yq '.version' "$dir/Chart.yaml")"
-            charts=$(curl --location '${{ secrets.CHARTMUSEUM_URL }}/api/charts/ec-config-server')
-            existing_versions=$($charts | jq '.[].version')
+            echo "Getting versions for chart $chart_name"
+            charts=$(curl --location '${{ secrets.CHARTMUSEUM_URL }}/api/charts/$chart_name')
+            echo $charts
+            echo "Getting version strings for chart $chart_name"
+            existing_versions=$(echo $charts | jq '.[].version')
             echo "$chart_name versions: $existing_versions"
             if [[ ${existing_versions[@]} =~ version ]] 
             then
