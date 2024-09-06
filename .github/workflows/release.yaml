@@ -32,7 +32,7 @@ jobs:
             chart_name="$(basename "$dir")"
             version="$(yq '.version' "$dir/Chart.yaml")"
             charts=$(curl --location '${{ secrets.CHARTMUSEUM_URL }}/api/charts/ec-config-server')
-            existing_versions=$($charts | yq '.[].version')
+            existing_versions=$($charts | jq '.[].version')
             echo "$chart_name versions: $existing_versions"
             if [[ ${existing_versions[@]} =~ version ]] 
             then
