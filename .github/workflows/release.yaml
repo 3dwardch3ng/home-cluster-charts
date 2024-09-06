@@ -32,6 +32,6 @@ jobs:
             version="$(yq '.version' "$dir/Chart.yaml")"
             if ! git rev-parse "$chart_name-${version#v}" &>/dev/null; then
               echo "Pushing chart $chart_name..."
-              helm cm-push $dir chartmuseum
+              helm cm-push --access-token ${{ secrets.CHARTMUSEUM_BASIC_AUTH }} $dir chartmuseum
             fi
           done
