@@ -31,8 +31,10 @@ jobs:
           for dir in charts/*; do
             chart_name="$(basename "$dir")"
             version="$(yq '.version' "$dir/Chart.yaml")"
+            chart_ver_url=${{ secrets.CHARTMUSEUM_URL }}/api/charts/$chart_name
+            echo $chart_ver_url
             echo "Getting versions for chart $chart_name"
-            charts=$(curl --location '${{ secrets.CHARTMUSEUM_URL }}/api/charts/$chart_name')
+            charts=$(curl --location $chart_ver_url)
             echo $charts
             echo "Getting version strings for chart $chart_name"
             existing_versions=$(echo $charts | jq '.[].version')
