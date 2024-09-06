@@ -32,14 +32,9 @@ jobs:
             chart_name="$(basename "$dir")"
             version="$(yq '.version' "$dir/Chart.yaml")"
             chart_ver_url=${{ secrets.CHARTMUSEUM_URL }}/api/charts/$chart_name
-            echo $chart_ver_url
-            echo "Getting versions for chart $chart_name"
             charts=$(curl --location $chart_ver_url)
-            echo $charts
-            echo "Getting version strings for chart $chart_name"
             existing_versions=$(echo $charts | jq '.[].version')
-            echo "$chart_name versions: $existing_versions"
-            if [[ ${existing_versions[@]} =~ version ]] 
+            if [[ ${existing_versions[@]} =~ $version ]] 
             then
               echo "Version $version for chart $chart_name exists, skipping..."
             else
