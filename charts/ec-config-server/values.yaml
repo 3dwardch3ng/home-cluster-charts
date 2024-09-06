@@ -108,11 +108,11 @@ serviceAccount:
   name: ec-user
 
 spring:
-  activeprofile: native,k8s
+  activeprofile: native
   configNativeSearchLocation:
 
 tolerations: []
 
-
-
-
+persistence:
+  mountPath: /opt/config
+  hostPath:
