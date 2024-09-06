@@ -78,7 +78,7 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
             - name: config
-              mountPath: {{ .Values.persistence.mountPath }}
+              mountPath: {{ .Values.environment.configNativeSearchLocation | default "/opt/config" }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
