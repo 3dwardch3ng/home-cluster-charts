@@ -36,9 +36,9 @@ jobs:
             echo "$chart_name versions: $existing_versions"
             if [[ ${existing_versions[@]} =~ version ]] 
             then
+              echo "Version $version for chart $chart_name exists, skipping..."
+            else
               echo "Pushing chart $chart_name..."
               helm cm-push -u ${{ secrets.CHARTMUSEUM_BASIC_AUTH_USER }} -p ${{ secrets.CHARTMUSEUM_BASIC_AUTH_PASSWORD }} $dir chartmuseum
-            else
-              echo "Version $version for chart $chart_name exists, skipping..."
             fi
           done
