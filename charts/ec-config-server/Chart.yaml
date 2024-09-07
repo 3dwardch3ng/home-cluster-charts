@@ -8,4 +8,4 @@ maintainers:
 name: ec-config-server
 sources:
   - https://github.com/3dwardch3ng/ec-config-server
-version: 1.0.8
+version: 1.0.9
