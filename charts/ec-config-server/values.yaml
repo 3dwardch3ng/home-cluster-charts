@@ -23,6 +23,7 @@ autoscaling:
   targetMemoryUtilizationPercentage: 75
 
 deployment:
+  port: 8100
   livenesscheckpath: /actuator/health/liveness
   readinesscheckpath: /actuator/health/readiness
   healthcheckport: 8100
