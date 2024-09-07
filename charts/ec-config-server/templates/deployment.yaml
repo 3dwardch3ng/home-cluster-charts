@@ -44,7 +44,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 8100
+              containerPort: {{ .Values.deployment.port }}
               protocol: TCP
           startupProbe:
             failureThreshold: {{ .Values.deployment.startupProbe.failureThreshold }}
