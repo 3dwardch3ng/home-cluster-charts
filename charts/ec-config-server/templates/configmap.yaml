@@ -12,4 +12,4 @@ data:
   CONFIG_NATIVE_SEARCH_LOCATION: {{ .Values.environment.configNativeSearchLocation }}
   {{- end }}
   {{- end }}
-  CONFIG_SERVER_PORT:{{ .Values.service.targetPort }}
+  CONFIG_SERVER_PORT: {{ .Values.service.targetPort }}
