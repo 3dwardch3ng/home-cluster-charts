@@ -1,5 +1,5 @@
 apiVersion: v2
-appVersion: "1.0.6"
+appVersion: "1.0.7"
 description: A Helm chart for ec-config-server microservice
 home: https://github.com/3dwardch3ng/ec-config-server
 maintainers:
@@ -8,4 +8,4 @@ maintainers:
 name: ec-config-server
 sources:
   - https://github.com/3dwardch3ng/ec-config-server
-version: 1.0.10
+version: 1.0.11
