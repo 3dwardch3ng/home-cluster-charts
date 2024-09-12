@@ -48,6 +48,8 @@ deployment:
 environment:
   name: k3s-cluster
   configNativeSearchLocation:
+  configServerAuth:
+    existingSecret:
 
 image:
   repository:

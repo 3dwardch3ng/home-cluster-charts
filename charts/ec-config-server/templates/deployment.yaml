@@ -38,6 +38,10 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ include "ec-config-server.fullname" . }}
+          {{- if .Values.environment.configServerAuth.existingSecret }}
+            - secretRef:
+                name: {{ .Values.environment.configServerAuth.existingSecret }}
+          {{- end }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
