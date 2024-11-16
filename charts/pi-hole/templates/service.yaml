@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.nameOverride | default "pi-hole" }}
+  namespace: {{ .Values.namespaceOverride | default "pi-hole" }}
+  {{- with .Values.deployment.podAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  labels:
+    {{- include "pi-hole.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: http
+      port: {{ .Values.service.ports.http }}
+      targetPort: 80
+      protocol: TCP
+    - name: dns-tcp
+      port: {{ .Values.service.ports.dnsTCP }}
+      targetPort: 53
+      protocol: TCP
+    - name: dns-udp
+      port: {{ .Values.service.ports.dnsUDP }}
+      targetPort: 53
+      protocol: UDP
+  selector:
+    {{- include "pi-hole.selectorLabels" . | nindent 4 }}
