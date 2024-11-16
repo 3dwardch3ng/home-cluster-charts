@@ -33,7 +33,7 @@ jobs:
             version="$(yq '.version' "$dir/Chart.yaml")"
             chart_ver_url=${{ secrets.CHARTMUSEUM_URL }}/api/charts
             charts=$(curl --location $chart_ver_url)
-            existing_versions=$(echo $charts | jq .'\"$chart_name\"'.[].version)
+            existing_versions=$(echo $charts | jq .'"$chart_name"'.[].version)
             if [ -z "${existing_versions}" ]
             then
               echo "Pushing chart $chart_name..."
