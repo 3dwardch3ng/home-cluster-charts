@@ -1,0 +1,114 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.nameOverride | default "pi-hole" }}
+  namespace: {{ .Values.namespaceOverride | default "pi-hole" }}
+  labels:
+    {{- include "pi-hole.labels" . | nindent 4 }}
+    {{- if not .Values.deployment.labels }}
+      {{ .Values.deployment.labels | nindent 4 }}
+    {{- end }}
+spec:
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: {{ .Values.deployment.rollingUpdate.maxUnavailable }}
+      maxSurge: {{ .Values.deployment.rollingUpdate.maxSurge }}
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "pi-hole.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.deployment.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "pi-hole.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: "pi-hole"
+          image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+          securityContext:
+            {{- toYaml .Values.deployment.containerSecurityContext | nindent 12 }}
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.nameOverride | default "pi-hole" }}
+            {{- if .Values.deployment.existingSecret }}
+            - secretRef:
+                name: {{ .Values.nameOverride | default "pi-hole" }}
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            - name: dns-tcp
+              containerPort: 53
+              protocol: TCP
+            - name: dns-udp
+              containerPort: 53
+              protocol: UDP
+          startupProbe:
+            failureThreshold: {{ .Values.deployment.startupProbe.failureThreshold }}
+            httpGet:
+              path: {{ .Values.deployment.livenesscheckpath }}
+              port: {{ .Values.deployment.healthcheckport }}
+              scheme: HTTP
+            periodSeconds: {{ .Values.deployment.startupProbe.periodSeconds }}
+            successThreshold: {{ .Values.deployment.startupProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.deployment.startupProbe.timeoutSeconds }}
+            initialDelaySeconds: {{ .Values.deployment.startupProbe.initialDelaySeconds }}
+          livenessProbe:
+            failureThreshold: {{ .Values.deployment.livenessProbe.failureThreshold }}
+            httpGet:
+              path: {{ .Values.deployment.livenesscheckpath }}
+              port: {{ .Values.deployment.healthcheckport }}
+              scheme: HTTP
+            periodSeconds: {{ .Values.deployment.livenessProbe.periodSeconds }}
+            successThreshold: {{ .Values.deployment.livenessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.deployment.livenessProbe.timeoutSeconds }}
+          readinessProbe:
+            failureThreshold: {{ .Values.deployment.readinessProbe.failureThreshold }}
+            httpGet:
+              path: {{ .Values.deployment.readinesscheckpath }}
+              port: {{ .Values.deployment.healthcheckport }}
+              scheme: HTTP
+            periodSeconds: {{ .Values.deployment.readinessProbe.periodSeconds }}
+            successThreshold: {{ .Values.deployment.readinessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.deployment.readinessProbe.timeoutSeconds }}
+          volumeMounts:
+            - name: pi-hole
+              mountPath: "/etc/pi-hole"
+            - name: dnsmasq-d
+              mountPath: "/etc/dnsmasq.d"
+      {{- with .Values.deployment.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.deployment.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.deployment.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: pi-hole
+          {{- if .Values.persistence.pihole.hostPath }}
+          hostPath:
+            path: {{ .Values.persistence.pihole.hostPath }}
+            type: Directory
+          {{- else }}
+          emptyDir: { }
+          {{- end }}
+        - name: dnsmasq-d
+          {{- if .Values.persistence.dnsmasqd.hostPath }}
+          hostPath:
+            path: {{ .Values.persistence.dnsmasqd.hostPath }}
+            type: Directory
+          {{- else }}
+          emptyDir: { }
+          {{- end }}

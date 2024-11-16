@@ -1,0 +1,83 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.nameOverride | default "pi-hole" }}
+  namespace: {{ .Values.namespaceOverride | default "pi-hole" }}
+  labels:
+    {{- include "pi-hole.labels" . | nindent 4 }}
+data:
+  TZ: {{ .Values.environment.TZ | quote }}
+  {{- if .Values.environment.FTLCONF_LOCAL_IPV4 }}
+  FTLCONF_LOCAL_IPV4:  {{ .Values.environment.FTLCONF_LOCAL_IPV4 }}
+  {{- end }}
+  PIHOLE_DNS_: {{ .Values.environment.PIHOLE_DNS_ | quote }}
+  DNSSEC: {{ .Values.environment.DNSSEC | quote }}
+  DNS_BOGUS_PRIV: {{ .Values.environment.DNS_BOGUS_PRIV | quote }}
+  DNS_FQDN_REQUIRED: {{ .Values.environment.DNS_FQDN_REQUIRED | quote }}
+  REV_SERVER: {{ .Values.environment.REV_SERVER | quote }}
+  {{- if .Values.environment.REV_SERVER_DOMAIN }}
+  REV_SERVER_DOMAIN: {{ .Values.environment.REV_SERVER_DOMAIN }}
+  {{- end }}
+  {{- if .Values.environment.REV_SERVER_TARGET }}
+  REV_SERVER_TARGET: {{ .Values.environment.REV_SERVER_TARGET }}
+  {{- end }}
+  {{- if .Values.environment.REV_SERVER_CIDR }}
+  REV_SERVER_CIDR: {{ .Values.environment.REV_SERVER_CIDR }}
+  {{- end }}
+  DHCP_ACTIVE: {{ .Values.environment.DHCP_ACTIVE | quote }}
+  {{- if .Values.environment.DHCP_START }}
+  DHCP_START: {{ .Values.environment.DHCP_START }}
+  {{- end }}
+  {{- if .Values.environment.DHCP_END }}
+  DHCP_END: {{ .Values.environment.DHCP_END }}
+  {{- end }}
+  {{- if .Values.environment.DHCP_ROUTER }}
+  DHCP_ROUTER: {{ .Values.environment.DHCP_ROUTER }}
+  {{- end }}
+  DHCP_LEASETIME: {{ .Values.environment.DHCP_LEASETIME | quote }}
+  PIHOLE_DOMAIN: {{ .Values.environment.PIHOLE_DOMAIN | quote }}
+  DHCP_IPv6: {{ .Values.environment.DHCP_IPv6 | quote }}
+  DHCP_rapid_commit: {{ .Values.environment.DHCP_rapid_commit | quote }}
+  {{- if .Values.environment.VIRTUAL_HOST }}
+  VIRTUAL_HOST: {{ .Values.environment.VIRTUAL_HOST }}
+  {{- end }}
+  IPv6: {{ .Values.environment.IPv6 | quote }}
+  TEMPERATUREUNIT: {{ .Values.environment.TEMPERATUREUNIT | quote }}
+  WEBUIBOXEDLAYOUT: {{ .Values.environment.WEBUIBOXEDLAYOUT | quote }}
+  QUERY_LOGGING: {{ .Values.environment.QUERY_LOGGING | quote }}
+  WEBTHEME: {{ .Values.environment.WEBTHEME | quote }}
+  {{- if .Values.environment.INTERFACE }}
+  INTERFACE: {{ .Values.environment.INTERFACE }}
+  {{- end }}
+  {{- if .Values.environment.DNSMASQ_LISTENING }}
+  DNSMASQ_LISTENING: {{ .Values.environment.DNSMASQ_LISTENING }}
+  {{- end }}
+  {{- if .Values.environment.WEB_PORT }}
+  WEB_PORT: {{ .Values.environment.WEB_PORT }}
+  {{- end }}
+  {{- if .Values.environment.WEB_BIND_ADDR }}
+  WEB_BIND_ADDR: {{ .Values.environment.WEB_BIND_ADDR }}
+  {{- end }}
+  {{- if .Values.environment.SKIPGRAVITYONBOOT }}
+  SKIPGRAVITYONBOOT: {{ .Values.environment.SKIPGRAVITYONBOOT }}
+  {{- end }}
+  {{- if .Values.environment.CORS_HOSTS }}
+  CORS_HOSTS: {{ .Values.environment.CORS_HOSTS }}
+  {{- end }}
+  CUSTOM_CACHE_SIZE: {{ .Values.environment.CUSTOM_CACHE_SIZE | quote }}
+  FTL_CMD: {{ .Values.environment.FTL_CMD | quote }}
+  {{- if .Values.environment.FTLCONF }}
+  {{- range $conf := .Values.environment.FTLCONF }}
+  FTLCONF_{{ $i }}
+    image:
+      myorg/myapp: {{ .Values.image.tag }}
+  {{- end }}
+  {{- end }}
+  {{- if .Values.environment.DNSMASQ_USER }}
+  DNSMASQ_USER: {{ .Values.environment.DNSMASQ_USER }}
+  {{- end }}
+  PIHOLE_UID: {{ .Values.environment.PIHOLE_UID | quote }}
+  PIHOLE_GID: {{ .Values.environment.PIHOLE_GID | quote }}
+  WEB_UID: {{ .Values.environment.WEB_UID | quote }}
+  WEB_GID: {{ .Values.environment.WEB_GID | quote }}
+  WEBLOGS_STDOUT: {{ .Values.environment.WEBTHEME | quote }}

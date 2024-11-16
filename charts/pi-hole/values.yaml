@@ -1,0 +1,161 @@
+nameOverride:
+namespaceOverride:
+deployment:
+  labels:
+  rollingUpdate:
+    maxUnavailable: 0
+    maxSurge: 100%
+  existingSecret: false
+  podAnnotations: {}
+  podSecurityContext: {}
+  containerSecurityContext: {}
+  image:
+    repository: https://ghcr.io/pi-hole/pihole
+    tag:
+    pullPolicy: Always
+  livenesscheckpath: /actuator/health/liveness
+  readinesscheckpath: /actuator/health/readiness
+  healthcheckport: 8100
+  healthcheckscheme: HTTP
+  startupProbe:
+    periodSeconds: 5
+    successThreshold: 1
+    timeoutSeconds: 10
+    failureThreshold: 10
+    initialDelaySeconds: 10
+  livenessProbe:
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 1
+    failureThreshold: 3
+  readinessProbe:
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 3
+    failureThreshold: 3
+  nodeSelector: {}
+  affinity: {}
+  tolerations: []
+persistence:
+  pihole:
+    hostPath:
+  dnsmasqd:
+    hostPath:
+service:
+  annotations: {}
+  labels:
+  type: ClusterIP
+  ports:
+    http: 80
+    dnsTCP: 53
+    dnsUDP: 53
+environment:
+  TZ: UTC
+  FTLCONF_LOCAL_IPV4:
+  PIHOLE_DNS_: 8.8.8.8;8.8.4.4
+  DNSSEC: false
+  DNS_BOGUS_PRIV: true
+  DNS_FQDN_REQUIRED: true
+  REV_SERVER: false
+  REV_SERVER_DOMAIN:
+  REV_SERVER_TARGET:
+  REV_SERVER_CIDR:
+  DHCP_ACTIVE: false
+  DHCP_START:
+  DHCP_END:
+  DHCP_ROUTER:
+  DHCP_LEASETIME: 24
+  PIHOLE_DOMAIN: lan
+  DHCP_IPv6: false
+  DHCP_rapid_commit: false
+  VIRTUAL_HOST:
+  IPv6: true
+  TEMPERATUREUNIT: c
+  WEBUIBOXEDLAYOUT: boxed
+  QUERY_LOGGING: true
+  WEBTHEME: default-light
+  INTERFACE:
+  DNSMASQ_LISTENING:
+  WEB_PORT:
+  WEB_BIND_ADDR:
+  SKIPGRAVITYONBOOT:
+  CORS_HOSTS:
+  CUSTOM_CACHE_SIZE: 10000
+  FTL_CMD: no-daemon
+  DNSMASQ_USER:
+  PIHOLE_UID: 999
+  PIHOLE_GID: 999
+  WEB_UID: 33
+  WEB_GID: 33
+  WEBLOGS_STDOUT: 0
+  FTLCONF:
+    BLOCKINGMODE:
+    CNAME_DEEP_INSPECT:
+    BLOCK_ESNI:
+    EDNS0_ECS:
+    RATE_LIMIT:
+    LOCAL_IPV4:
+    LOCAL_IPV6:
+    BLOCK_IPV4:
+    BLOCK_IPV6:
+    REPLY_WHEN_BUSY:
+    MOZILLA_CANARY:
+    BLOCK_TTL:
+    BLOCK_ICLOUD_PR:
+    MAXLOGAGE:
+    PRIVACYLEVEL:
+    IGNORE_LOCALHOST:
+    AAAA_QUERY_ANALYSIS:
+    ANALYZE_ONLY_A_AND_AAAA:
+    SHOW_DNSSEC:
+    SOCKET_LISTENING:
+    FTLPORT:
+    RESOLVE_IPV6:
+    RESOLVE_IPV4:
+    PIHOLE_PTR:
+    DELAY_STARTUP:
+    NICE:
+    MAXNETAGE:
+    NAMES_FROM_NETDB:
+    REFRESH_HOSTNAMES:
+    PARSE_ARP_CACHE:
+    CHECK_LOAD:
+    CHECK_SHMEM:
+    CHECK_DISK:
+    DBIMPORT:
+    MAXDBDAYS:
+    DBINTERVAL:
+    DBFILE:
+    LOGFILE:
+    PIDFILE:
+    SOCKETFILE:
+    SETUPVARSFILE:
+    MACVENDORDB:
+    GRAVITYDB:
+    DEBUG_ALL:
+    DEBUG_DATABASE:
+    DEBUG_NETWORKING:
+    DEBUG_EDNS0:
+    DEBUG_LOCKS:
+    DEBUG_QUERIES:
+    DEBUG_FLAGS:
+    DEBUG_SHMEM:
+    DEBUG_GC:
+    DEBUG_ARP:
+    DEBUG_REGEX:
+    DEBUG_API:
+    DEBUG_OVERTIME:
+    DEBUG_STATUS:
+    DEBUG_CAPS:
+    DEBUG_DNSMASQ_LINES:
+    DEBUG_VECTORS:
+    DEBUG_RESOLVER:
+    DEBUG_CLIENTS:
+    DEBUG_ALIASCLIENTS:
+    DEBUG_EVENTS:
+    DEBUG_HELPER:
+    ADDR2LINE:
+    DEBUG_EXTRA:
+    REPLY_ADDR4:
+    REPLY_ADDR6:
+    PORTFILE:
