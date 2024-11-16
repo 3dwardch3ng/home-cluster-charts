@@ -33,18 +33,18 @@ jobs:
             version="$(yq '.version' "$dir/Chart.yaml")"
             chart_ver_url=${{ secrets.CHARTMUSEUM_URL }}/api/charts
             charts=$(curl --location $chart_ver_url)
-            existing_versions=$(echo $charts | jq .'"$chart_name"'.[].version)
+            existing_versions=$(echo $charts | jq .'"${chart_name}"'.[].version)
             if [ -z "${existing_versions}" ]
             then
               echo "Pushing chart $chart_name..."
-              helm cm-push -u ${{ secrets.CHARTMUSEUM_BASIC_AUTH_USER }} -p ${{ secrets.CHARTMUSEUM_BASIC_AUTH_PASSWORD }} $dir chartmuseum
+              echo "helm cm-push -u ${{ secrets.CHARTMUSEUM_BASIC_AUTH_USER }} -p ${{ secrets.CHARTMUSEUM_BASIC_AUTH_PASSWORD }} $dir chartmuseum"
             else
               if [[ ${existing_versions[@]} =~ $version ]] 
               then
                 echo "Version $version for chart $chart_name exists, skipping..."
               else
                 echo "Pushing chart $chart_name..."
-                helm cm-push -u ${{ secrets.CHARTMUSEUM_BASIC_AUTH_USER }} -p ${{ secrets.CHARTMUSEUM_BASIC_AUTH_PASSWORD }} $dir chartmuseum
+                echo "helm cm-push -u ${{ secrets.CHARTMUSEUM_BASIC_AUTH_USER }} -p ${{ secrets.CHARTMUSEUM_BASIC_AUTH_PASSWORD }} $dir chartmuseum"
               fi
             fi
           done
