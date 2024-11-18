@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.nameOverride | default "homer" }}
+  namespace: {{ .Values.namespaceOverride | default "homer" }}
+  annotations:
+    metallb.universe.tf/address-pool: k3s-cluster-ip-pool
+    metallb.universe.tf/allow-shared-ip: k3s-cluster
+  labels:
+    {{- include "homer.labels" . | nindent 4 }}
+spec:
+  selector:
+    {{- include "homer.selectorLabels" . | nindent 4 }}
+    type: {{ .Values.service.type }}
+  internalTrafficPolicy: Cluster
+  ports:
+    - protocol: TCP
+      port: {{ .Values.service.port | default 8088 }}
+      targetPort: {{ .Values.deployment.port | default 8088 }}
+      name: http

@@ -1,0 +1,14 @@
+nameOverride:
+namespaceOverride:
+deployment:
+  labels:
+  env:
+    port:
+    initAssets:
+  port:
+  persistent:
+    hostPath:
+  nodeSelector: {}
+service:
+  type: ClusterIP
+  port:
