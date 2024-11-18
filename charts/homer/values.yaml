@@ -1,7 +1,6 @@
 nameOverride:
 namespaceOverride:
 deployment:
-  labels:
   env:
     port:
     initAssets:
