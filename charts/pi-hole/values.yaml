@@ -45,6 +45,7 @@ service:
   annotations: {}
   labels:
   type: ClusterIP
+  loadBalancerIP:
   ports:
     http: 80
     dnsTCP: 53
