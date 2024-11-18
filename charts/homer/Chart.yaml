@@ -1,0 +1,11 @@
+apiVersion: v2
+appVersion: "v24.11.4"
+description: A Helm chart for homer
+home: https://github.com/bastienwirtz/homer
+maintainers:
+  - email: edward@cheng.sydney
+    name: Edward Cheng
+name: homer
+sources:
+  - https://github.com/bastienwirtz/homer
+version: 1.0.0

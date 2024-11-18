@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.nameOverride | default "homer" }}
+  namespace: {{ .Values.namespaceOverride | default "homer" }}
+  labels:
+    {{- include "homer.labels" . | nindent 4 }}
+    {{- if not .Values.deployment.labels }}
+    {{ .Values.deployment.labels | nindent 4 }}
+    {{- end }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "homer.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "homer.selectorLabels" . | nindent 8 }}
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+      containers:
+        - name: homer
+          image: "b4bz/homer:{{ .Values.deployment.image.tag | default .Chart.AppVersion }}"
+          securityContext:
+            allowPrivilegeEscalation: false
+          env:
+            - name: PORT
+              value: {{ .Values.deployment.env.port | default 8088 | quote }}
+            - name: INIT_ASSETS
+              value: {{ .Values.deployment.env.initAssets | default 0 | quote }}
+          ports:
+            - protocol: TCP
+              containerPort: {{ .Values.deployment.port | default 8088 }}
+              name: http
+          volumeMounts:
+            - name: www
+              mountPath: /www
+      volumes:
+        - name: www
+          hostPath:
+            path: {{ .Values.deployment.persistent.hostPath }}
+            type: Directory
+      nodeSelector:
+        {{- if not .Values.deployment.nodeSelector }}
+        {{ .Values.deployment.nodeSelector | nindent 8 }}
+        {{- end }}
