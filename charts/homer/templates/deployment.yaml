@@ -5,9 +5,6 @@ metadata:
   namespace: {{ .Values.namespaceOverride | default "homer" }}
   labels:
     {{- include "homer.labels" . | nindent 4 }}
-    {{- if not .Values.deployment.labels }}
-    {{ .Values.deployment.labels | nindent 4 }}
-    {{- end }}
 spec:
   selector:
     matchLabels:
