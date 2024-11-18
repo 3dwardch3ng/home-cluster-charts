@@ -1,3 +1,7 @@
+{{- define "homer.chart" -}}
+{{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
 {{- define "homer.labels" -}}
 helm.sh/chart: {{ include "homer.chart" . }}
 {{ include "homer.selectorLabels" . }}
