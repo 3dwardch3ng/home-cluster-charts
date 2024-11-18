@@ -1,6 +1,8 @@
 nameOverride:
 namespaceOverride:
 deployment:
+  image:
+    tag:
   env:
     port:
     initAssets:
