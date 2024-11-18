@@ -3,9 +3,10 @@ kind: Service
 metadata:
   name: {{ .Values.nameOverride | default "homer" }}
   namespace: {{ .Values.namespaceOverride | default "homer" }}
+  {{- with .Values.service.annotations }}
   annotations:
-    metallb.universe.tf/address-pool: k3s-cluster-ip-pool
-    metallb.universe.tf/allow-shared-ip: k3s-cluster
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   labels:
     {{- include "homer.labels" . | nindent 4 }}
 spec:

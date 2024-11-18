@@ -12,3 +12,4 @@ deployment:
 service:
   type: ClusterIP
   port:
+  annotations: {}
