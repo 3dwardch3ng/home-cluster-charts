@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: {{ .Values.nameOverride | default "pi-hole" }}
   namespace: {{ .Values.namespaceOverride | default "pi-hole" }}
-  {{- with .Values.deployment.podAnnotations }}
+  {{- with .Values.service.annotations }}
   annotations:
     {{- toYaml . | nindent 4 }}
   {{- end }}
