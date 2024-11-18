@@ -11,5 +11,6 @@ deployment:
   nodeSelector: {}
 service:
   type: ClusterIP
+  loadBalancerIP:
   port:
   annotations: {}
