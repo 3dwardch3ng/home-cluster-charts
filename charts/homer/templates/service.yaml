@@ -12,7 +12,10 @@ metadata:
 spec:
   selector:
     {{- include "homer.selectorLabels" . | nindent 4 }}
-    type: {{ .Values.service.type }}
+  type: {{ .Values.service.type }}
+  {{- with .Values.service.loadBalancerIP }}
+  loadBalancerIP:
+  {{- end }}
   internalTrafficPolicy: Cluster
   ports:
     - protocol: TCP
