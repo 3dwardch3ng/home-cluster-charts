@@ -1,7 +1,6 @@
 nameOverride:
 namespaceOverride:
 deployment:
-  labels:
   rollingUpdate:
     maxUnavailable: 0
     maxSurge: 100%
