@@ -8,4 +8,4 @@ maintainers:
 name: pi-hole
 sources:
   - https://github.com/pi-hole/docker-pi-hole/
-version: 1.0.6
+version: 1.0.7
