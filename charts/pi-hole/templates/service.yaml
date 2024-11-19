@@ -15,8 +15,8 @@ spec:
   loadBalancerIP:
   {{- end }}
   ports:
-    - name: http
-      port: {{ .Values.service.ports.http }}
+    - name: web
+      port: {{ .Values.service.ports.web }}
       targetPort: 80
       protocol: TCP
     - name: dns-tcp
