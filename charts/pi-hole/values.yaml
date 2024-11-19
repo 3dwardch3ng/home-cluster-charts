@@ -9,7 +9,7 @@ deployment:
   podSecurityContext: {}
   containerSecurityContext: {}
   image:
-    repository: https://ghcr.io/pi-hole/pi-hole
+    repository: pihole/pihole
     tag:
     pullPolicy: Always
   livenesscheckpath: /actuator/health/liveness
