@@ -66,13 +66,6 @@ data:
   {{- end }}
   CUSTOM_CACHE_SIZE: {{ .Values.environment.CUSTOM_CACHE_SIZE | quote }}
   FTL_CMD: {{ .Values.environment.FTL_CMD | quote }}
-  {{- if .Values.environment.FTLCONF }}
-  {{- range $conf := .Values.environment.FTLCONF }}
-  FTLCONF_{{ $i }}
-    image:
-      myorg/myapp: {{ .Values.image.tag }}
-  {{- end }}
-  {{- end }}
   {{- if .Values.environment.DNSMASQ_USER }}
   DNSMASQ_USER: {{ .Values.environment.DNSMASQ_USER }}
   {{- end }}
