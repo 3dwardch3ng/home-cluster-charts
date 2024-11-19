@@ -38,7 +38,7 @@ spec:
                 name: {{ .Values.nameOverride | default "pi-hole" }}
             {{- end }}
           ports:
-            - name: http
+            - name: web
               containerPort: 80
               protocol: TCP
             - name: dns-tcp
