@@ -73,4 +73,4 @@ data:
   PIHOLE_GID: {{ .Values.environment.PIHOLE_GID | quote }}
   WEB_UID: {{ .Values.environment.WEB_UID | quote }}
   WEB_GID: {{ .Values.environment.WEB_GID | quote }}
-  WEBLOGS_STDOUT: {{ .Values.environment.WEBTHEME | quote }}
+  WEBLOGS_STDOUT: {{ .Values.environment.WEBLOGS_STDOUT | quote }}
