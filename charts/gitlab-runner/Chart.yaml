@@ -1,0 +1,11 @@
+apiVersion: v2
+appVersion: "17.6.0-debian-12-r0"
+description: A Helm chart for Gitlab Runner
+home: https://github.com/bitnami/containers/tree/main/bitnami/gitlab-runner
+maintainers:
+  - email: edward@cheng.sydney
+    name: Edward Cheng
+name: gitlab-runner
+sources:
+  - https://github.com/bitnami/containers/tree/main/bitnami/gitlab-runner
+version: 1.0.0
