@@ -5,10 +5,17 @@ CHARTMUSEUM_URL=$1
 CHARTMUSEUM_BASIC_AUTH_USER=$2
 CHARTMUSEUM_BASIC_AUTH_PASSWORD=$3
 
+echo "Install Helm..."
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+echo "Install helm-push plugin..."
 helm plugin install https://github.com/chartmuseum/helm-push
+
+echo "Add Chartmuseum helm repo..."
 helm repo add chartmuseum $CHARTMUSEUM_URL
 helm repo update
 
+echo "Process and push charts to the Chartmuseum..."
 for dir in charts/*; do
   chart_name="$(basename "$dir")"
   version="$(yq '.version' "$dir/Chart.yaml")"
