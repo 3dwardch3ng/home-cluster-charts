@@ -16,7 +16,7 @@ helm repo add chartmuseum $CHARTMUSEUM_URL
 helm repo update
 
 echo "Install jq and curl"
-apt isntall jq,curl
+apt-get install jq,curl
 
 echo "Process and push charts to the Chartmuseum..."
 for dir in charts/*; do
