@@ -1,4 +1,7 @@
+default:
+  image: alpine/helm:3.16.3
+
 release:
-  stage: deploy
+  stage: release
   script:
     - bash ./scripts/release-charts.sh $CHARTMUSEUM_URL $CHARTMUSEUM_BASIC_AUTH_USER $CHARTMUSEUM_BASIC_AUTH_PASSWORD
