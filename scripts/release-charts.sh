@@ -17,7 +17,7 @@ helm repo update
 
 echo "Install yq and curl"
 apt-get update
-apt-get install yq,curl -y
+apt-get install yq curl -y
 
 echo "Process and push charts to the Chartmuseum..."
 for dir in charts/*; do
