@@ -15,8 +15,8 @@ echo "Add Chartmuseum helm repo..."
 helm repo add chartmuseum $CHARTMUSEUM_URL
 helm repo update
 
-echo "Install jq and curl"
-apt isntall jq,curl
+echo "Install yq and curl"
+apt-get install yq,curl
 
 echo "Process and push charts to the Chartmuseum..."
 for dir in charts/*; do
