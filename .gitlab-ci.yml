@@ -3,5 +3,7 @@ default:
 
 release:
   stage: release
+  only:
+    - main
   script:
     - bash ./scripts/release-charts.sh $CHARTMUSEUM_URL $CHARTMUSEUM_BASIC_AUTH_USER $CHARTMUSEUM_BASIC_AUTH_PASSWORD
